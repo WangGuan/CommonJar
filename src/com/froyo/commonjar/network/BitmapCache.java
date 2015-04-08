@@ -7,6 +7,7 @@ import com.android.volley.toolbox.ImageLoader.ImageCache;
 
 public class BitmapCache implements ImageCache {
 	
+	/**目前图片均是保存在内存中*/
 	private LruCache<String, Bitmap> mCache;
 
 	public BitmapCache() {

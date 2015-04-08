@@ -13,15 +13,15 @@ import org.apache.http.HttpEntity;
 
 import com.froyo.commonjar.utils.Utils;
 
-public class MultipartRequestParams {
+public class PostParams {
 	protected ConcurrentHashMap<String, String> urlParams;
 	protected ConcurrentHashMap<String, FileWrapper> fileParams;
 
-	public MultipartRequestParams() {
+	public PostParams() {
 		init();
 	}
 
-	public MultipartRequestParams(String key, String value) {
+	public PostParams(String key, String value) {
 		init();
 		put(key, value);
 	}

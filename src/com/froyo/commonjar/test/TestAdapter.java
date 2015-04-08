@@ -21,6 +21,7 @@ public class TestAdapter extends SimpleAdapter<String> {
 	}
 
 	public static class ViewHolder{
+		//这里viewHolder的属性的名字必须和对应item的layout里面的id的名字一样
 		TextView tv_name;
 	}
 }

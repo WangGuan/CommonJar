@@ -17,9 +17,9 @@ public abstract class BaseFragment extends Fragment {
 
 	public BaseActivity activity;
 
-	protected abstract int setLayoutResID();
-
 	protected abstract void setListener();
+
+	protected abstract int setLayoutResID();
 
 	@Override
 	public void onCreate(Bundle savedInstanceState) {

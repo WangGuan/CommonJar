@@ -26,11 +26,11 @@ import com.froyo.commonjar.activity.BaseActivity;
 
 public class PostRequest extends Request<JSONObject> {
 	private RespListener listener = null;
-	private MultipartRequestParams params = null;
+	private PostParams params = null;
 	private HttpEntity httpEntity = null;
 
 	public PostRequest(final BaseActivity activity,
-			MultipartRequestParams params, String url,
+			PostParams params, String url,
 			final RespListener listener) {
 		super(Method.POST, url, new ErrorListener() {
 

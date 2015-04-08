@@ -27,7 +27,6 @@ public abstract class BaseTask<Params, Progress, Result> extends
 				return doExecute(null);
 			}
 		} catch (Exception e) {
-			e.printStackTrace();
 			this.e = e;
 			cancel(false);
 			activity.dismissDialog();
