@@ -19,7 +19,6 @@ import com.froyo.commonjar.utils.Utils;
  * @created 2014年6月10日 下午4:33:12
  * @param <E>
  */
-
 public abstract class SimpleAdapter<E> extends BaseAdapter {
 
 	private List<E> data;
