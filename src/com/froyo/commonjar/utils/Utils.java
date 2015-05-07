@@ -93,6 +93,7 @@ public class Utils {
 		}
 		return list;
 	}
+
 	public static boolean isMobileNum(String mobile) {
 		if (isEmpty(mobile)) {
 			return false;
@@ -123,14 +124,15 @@ public class Utils {
 			return false;
 		}
 		for (int i = 0; i < serviceList.size(); i++) {
-			if (serviceList.get(i).service.getClassName().equalsIgnoreCase(className) == true) {
+			if (serviceList.get(i).service.getClassName().equalsIgnoreCase(
+					className) == true) {
 				isRunning = true;
 				break;
 			}
 		}
 		return isRunning;
 	}
-	
+
 	public static File saveBitmapFile(Context context, Bitmap bitmap) {
 		UUID id = UUID.randomUUID();
 		File file = new File(InitUtil.getImageCachePath(context) + id + ".png");// 将要保存图片的路径
@@ -145,43 +147,43 @@ public class Utils {
 		}
 		return file;
 	}
-	
+
 	/**
 	 * 
 	 * @Des: 获取视频缩略图
 	 * @param @param url
 	 * @param @param width
 	 * @param @param height
-	 * @param @return   
+	 * @param @return
 	 * @return Bitmap
 	 */
 	@TargetApi(Build.VERSION_CODES.ICE_CREAM_SANDWICH)
 	public static Bitmap createVideoThumbnail(String url, int width, int height) {
-	    Bitmap bitmap = null;
-	    MediaMetadataRetriever retriever = new MediaMetadataRetriever();
-	    int kind = MediaStore.Video.Thumbnails.MINI_KIND;
-	    try {
-	      if (Build.VERSION.SDK_INT >= 14) {
-	        retriever.setDataSource(url, new HashMap<String, String>());
-	      } else {
-	        retriever.setDataSource(url);
-	      }
-	      bitmap = retriever.getFrameAtTime();
-	    } catch (IllegalArgumentException ex) {
-	      // Assume this is a corrupt video file
-	    } catch (RuntimeException ex) {
-	      // Assume this is a corrupt video file.
-	    } finally {
-	      try {
-	        retriever.release();
-	      } catch (RuntimeException ex) {
-	        // Ignore failures while cleaning up.
-	      }
-	    }
-	    if (kind == Images.Thumbnails.MICRO_KIND && bitmap != null) {
-	      bitmap = ThumbnailUtils.extractThumbnail(bitmap, width, height,
-	          ThumbnailUtils.OPTIONS_RECYCLE_INPUT);
-	    }
-	    return bitmap;
-	  }
+		Bitmap bitmap = null;
+		MediaMetadataRetriever retriever = new MediaMetadataRetriever();
+		int kind = MediaStore.Video.Thumbnails.MINI_KIND;
+		try {
+			if (Build.VERSION.SDK_INT >= 14) {
+				retriever.setDataSource(url, new HashMap<String, String>());
+			} else {
+				retriever.setDataSource(url);
+			}
+			bitmap = retriever.getFrameAtTime();
+		} catch (IllegalArgumentException ex) {
+			// Assume this is a corrupt video file
+		} catch (RuntimeException ex) {
+			// Assume this is a corrupt video file.
+		} finally {
+			try {
+				retriever.release();
+			} catch (RuntimeException ex) {
+				// Ignore failures while cleaning up.
+			}
+		}
+		if (kind == Images.Thumbnails.MICRO_KIND && bitmap != null) {
+			bitmap = ThumbnailUtils.extractThumbnail(bitmap, width, height,
+					ThumbnailUtils.OPTIONS_RECYCLE_INPUT);
+		}
+		return bitmap;
+	}
 }
