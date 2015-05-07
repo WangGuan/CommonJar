@@ -3,13 +3,17 @@ package com.froyo.commonjar.activity;
 import java.io.Serializable;
 
 import android.app.Activity;
+import android.app.Dialog;
 import android.app.ProgressDialog;
 import android.content.Intent;
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.support.v4.app.FragmentActivity;
+import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
+import android.view.Window;
+import android.view.WindowManager;
 import android.widget.LinearLayout.LayoutParams;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -21,8 +25,15 @@ import com.lidroid.xutils.ViewUtils;
 public abstract class BaseActivity extends FragmentActivity {
 
 	protected BaseActivity activity = this;
-	
+
+	/** 加载对话框 */
 	private ProgressDialog loadingDialog;
+
+	/** 半透明对话框 */
+	private Dialog translucentDialog;
+
+	/** 半透明对话框加载的view */
+	private View translucentView;
 
 	protected abstract int setLayoutResID();
 
@@ -157,9 +168,69 @@ public abstract class BaseActivity extends FragmentActivity {
 		}
 	}
 
+	public void dismissTranslucentDialog() {
+		if (translucentDialog != null && translucentDialog.isShowing()) {
+			translucentDialog.dismiss();
+		}
+	}
+
 	@Override
 	protected void onDestroy() {
 		super.onDestroy();
 		dismissDialog();
+		dismissTranslucentDialog();
 	}
+
+	/**
+	 * 
+	 * @param resId
+	 * @param height
+	 * @param width
+	 * @param paddingLeft
+	 * @param paddingRight
+	 * @param gravity
+	 *            :Gravity.CENTER_VERTICAL;Gravity.BOTTOM;Gravity.TOP;
+	 */
+	public void showTranslucentDialog(int resId, int height, int width,
+			int paddingLeft, int paddingRight, int gravity) {
+		if (translucentDialog == null) {
+			translucentDialog = new Dialog(activity, R.style.Dialog);
+			translucentView = activity.makeView(resId);
+			Window win = translucentDialog.getWindow();
+			WindowManager.LayoutParams lp = win.getAttributes();
+
+			win.setGravity(Gravity.CENTER_HORIZONTAL | gravity);
+			win.getDecorView().setPadding(paddingLeft, 0, paddingRight, 0);
+
+			lp.height = height;
+			lp.width = width;
+			win.setAttributes(lp);
+			translucentDialog.setContentView(translucentView);
+			translucentDialog.setCancelable(true);
+		}
+		translucentDialog.show();
+	}
+
+	public void showTranslucentDialog(int resId, int height, int width) {
+		showTranslucentDialog(resId, height, width, 0, 0, Gravity.BOTTOM);
+	}
+
+	public void showTranslucentDialog(int resId, int gravity) {
+		showTranslucentDialog(resId, AppUtils.getHeight(activity) / 4,
+				WindowManager.LayoutParams.MATCH_PARENT, 0, 0, gravity);
+	}
+
+	public void showTranslucentDialog(int resId) {
+		showTranslucentDialog(resId, AppUtils.getHeight(activity) / 4,
+				WindowManager.LayoutParams.MATCH_PARENT, 0, 0, Gravity.BOTTOM);
+	}
+
+	public View getTranslucentView() {
+		if (translucentDialog == null || translucentView == null) {
+			toast("translucentDialog未初始化");
+			return null;
+		}
+		return translucentView;
+	}
+
 }
