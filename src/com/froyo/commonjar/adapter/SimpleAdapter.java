@@ -30,13 +30,16 @@ public abstract class SimpleAdapter<E> extends BaseAdapter {
 	private Class<?> holderClass;
 
 	protected Object holder;
+	
+	private Class<?> cls;
 
 	public SimpleAdapter(List<E> data, BaseActivity activity, int layoutId,
-			Class<?> holderClass) {
+			Class<?> holderClass,Class<?> cls) {
 		this.data = data;
 		this.activity = activity;
 		this.layoutId = layoutId;
 		this.holderClass = holderClass;
+		this.cls=cls;
 	}
 
 	@Override
@@ -151,7 +154,7 @@ public abstract class SimpleAdapter<E> extends BaseAdapter {
 				String name = f.getName();
 				f.setAccessible(true);
 				// ViewHolder的属性，不论类型都初始化赋值
-				f.set(holder, convertView.findViewById(RUtils.getId(name)));
+				f.set(holder, convertView.findViewById(RUtils.getId(name,cls)));
 			}
 		} catch (Exception e) {
 			throw new RuntimeException("holder初始化出错    " + e);
