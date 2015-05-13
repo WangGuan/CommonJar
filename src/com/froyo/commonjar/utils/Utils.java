@@ -26,7 +26,11 @@ import android.media.ThumbnailUtils;
 import android.os.Build;
 import android.provider.MediaStore;
 import android.provider.MediaStore.Images;
+import android.view.View;
+import android.view.ViewGroup;
 import android.view.inputmethod.InputMethodManager;
+import android.widget.ListAdapter;
+import android.widget.ListView;
 
 import com.froyo.commonjar.activity.BaseActivity;
 
@@ -185,5 +189,32 @@ public class Utils {
 					ThumbnailUtils.OPTIONS_RECYCLE_INPUT);
 		}
 		return bitmap;
+	}
+
+	/**
+	 * 主要是用于ListView的item同样是listView的情况
+	 * @Des:设置ListView的Adapter后调用此静态方法即可让ListView正确的显示在其父ListView的ListItem中。但是要注意的是，子ListView的每个Item必须是LinearLayout，不能是其他的，
+	 * @param @param listView
+	 * @return void
+	 */
+
+	public static void setListViewHeightBasedOnChildren(ListView listView) {
+		ListAdapter listAdapter = listView.getAdapter();
+		if (listAdapter == null) {
+			// pre-condition
+			return;
+		}
+
+		int totalHeight = 0;
+		for (int i = 0; i < listAdapter.getCount(); i++) {
+			View listItem = listAdapter.getView(i, null, listView);
+			listItem.measure(0, 0);
+			totalHeight += listItem.getMeasuredHeight();
+		}
+
+		ViewGroup.LayoutParams params = listView.getLayoutParams();
+		params.height = totalHeight
+				+ (listView.getDividerHeight() * (listAdapter.getCount() - 1));
+		listView.setLayoutParams(params);
 	}
 }
