@@ -130,6 +130,13 @@ public abstract class SimpleAdapter<E> extends BaseAdapter {
 		return data;
 	}
 
+	public void replace(E e,int position){
+		if (!Utils.isEmpty(data)) {
+			data.remove(position);
+			data.add(position, e);
+			notifyDataSetChanged();
+		}
+	}
 	public int getPosition(E e) {
 		if (!Utils.isEmpty(data)) {
 			return data.indexOf(e);
