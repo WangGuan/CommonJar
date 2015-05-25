@@ -88,6 +88,63 @@ public abstract class GridSimpleAdapter<E>  extends ListAsGridBaseAdapter {
 		return holder;
 	}
 
+	public void addItems(List<E> extras) {
+		if(Utils.isEmpty(extras)){
+			return;
+		}
+		data.addAll(getCount(), extras);
+		notifyDataSetChanged();
+	}
+
+	public void addItems(List<E> extras, int local) {
+		if(Utils.isEmpty(extras)){
+			return;
+		}
+		data.addAll(local, extras);
+		notifyDataSetChanged();
+	}
+
+	public void addItem(E extras, int local) {
+		data.add(local, extras);
+		notifyDataSetChanged();
+	}
+
+	public void reload(List<E> newData) {
+		data.clear();
+		addItems(newData);
+	}
+
+	public void refresh() {
+		if (!Utils.isEmpty(data)) {
+			notifyDataSetChanged();
+		}
+	}
+
+	public void removeByPos(int position) {
+		E e = getItem(position);
+		remove(e);
+	}
+
+	public void remove(E item) {
+		data.remove(item);
+		notifyDataSetChanged();
+	}
+
+	public void removeAll() {
+		data.clear();
+		notifyDataSetChanged();
+	}
+
+	public List<E> getDataSource() {
+		return data;
+	}
+
+	public int getPosition(E e) {
+		if (!Utils.isEmpty(data)) {
+			return data.indexOf(e);
+		}
+		return 0;
+	}
 	public abstract void doExtra(View convertView, E item,int position);
 	public abstract int setColumns();
 }

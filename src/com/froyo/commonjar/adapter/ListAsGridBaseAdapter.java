@@ -115,7 +115,7 @@ public abstract class ListAsGridBaseAdapter extends BaseAdapter {
 		if (mBackgroundResource > 0) {
 			layout.setBackgroundResource(mBackgroundResource);
 		}
-		int adjustedColumnWidth = columnWidth - (layout.getPaddingLeft() + layout.getPaddingRight())/mNumColumns;
+		int adjustedColumnWidth = columnWidth - (viewGroup.getPaddingLeft() + viewGroup.getPaddingRight())/mNumColumns;
 		layout.setOrientation(LinearLayout.HORIZONTAL);
 		// Now add the sub views to it
 		for (int i = 0; i < mNumColumns; i++) {
@@ -136,13 +136,14 @@ public abstract class ListAsGridBaseAdapter extends BaseAdapter {
 			// Set the width of this column
 			LayoutParams params = insideView.getLayoutParams();
 			params.width = adjustedColumnWidth;
+			params.height=adjustedColumnWidth;
 			insideView.setLayoutParams(params);		
 		}
 		return layout;
 	}	
 
 	private void updateItemRow(int position, ViewGroup viewGroup, LinearLayout layout, int columnWidth) {
-		int realColumnWidth = columnWidth - (layout.getPaddingLeft() + layout.getPaddingRight())/mNumColumns;
+		int realColumnWidth = columnWidth - (viewGroup.getPaddingLeft() + viewGroup.getPaddingRight())/mNumColumns;
 		for (int i=0; i<mNumColumns; i++) {
 			int currentPos = position * mNumColumns + i;
 			View insideView = layout.getChildAt(i);
@@ -154,6 +155,7 @@ public abstract class ListAsGridBaseAdapter extends BaseAdapter {
 			// Set the width of this column
 			LayoutParams params = insideView.getLayoutParams();
 			params.width = realColumnWidth;
+			params.height = realColumnWidth;
 			insideView.setLayoutParams(params);
 
 			if (currentPos < getItemCount()) {
