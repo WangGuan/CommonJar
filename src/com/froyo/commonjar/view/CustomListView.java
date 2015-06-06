@@ -103,7 +103,7 @@ public class CustomListView extends ListView implements OnScrollListener {
 
 	public void setCanLoadMore(boolean pCanLoadMore) {
 		mCanLoadMore = pCanLoadMore;
-		if (mCanLoadMore && getFooterViewsCount() == 0) {
+		if ( getFooterViewsCount() == 0) {
 			addFooterView();
 		}
 		if(mEndLoadTipsTextView.getText().equals("无更多数据可加载")){
@@ -775,6 +775,9 @@ public class CustomListView extends ListView implements OnScrollListener {
 	}
 	
 	public void setHasNoMoreData(){
+		if ( getFooterViewsCount() == 0) {
+			addFooterView();
+		}
 		mCanLoadMore = false;
 		mEndLoadTipsTextView.setText(R.string.p2refresh_end_no_more);
 		mEndLoadTipsTextView.setVisibility(View.VISIBLE);

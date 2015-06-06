@@ -16,6 +16,7 @@ public class GsonTools {
             Gson gson = new Gson();  
             t = gson.fromJson(jsonString, cls);  
         } catch (Exception e) {  
+        	e.printStackTrace();
         }  
         return t;  
     }  
